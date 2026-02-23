@@ -32,36 +32,71 @@ export default function ProductsPage() {
       });
   }, []);
 
-  if (loading) return <p>Caricamento...</p>;
-  if (error) return <p>❌ {error}</p>;
+  if (loading) {
+    return (
+      <div className="container py-5 text-center">
+        <div className="spinner-border" role="status" />
+        <p className="mt-3">Caricamento prodotti...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container py-5 text-center">
+        <p className="text-danger fw-bold">❌ {error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="container-fluid px-4">
-      <h1 className="mb-4 text-center">Prodotti</h1>
+    <div className="container py-5">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+        <h1 className="fw-bold m-0">🛍️ Prodotti</h1>
 
-      <div className="row justify-content-center g-4">
+        {budgetMode && (
+          <span className="badge text-bg-success p-2">
+            Budget mode attivo (≤ 30€)
+          </span>
+        )}
+      </div>
+
+      <div className="row g-4">
         {filteredProducts.map((p) => (
           <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={p.id}>
             <Link
               to={`/products/${p.id}`}
               className="text-decoration-none text-dark"
             >
-              <div className="card h-100 shadow-sm">
+              <div className="card h-100 shadow-sm border-0 product-card">
                 <img
                   src={p.image}
                   alt={p.title}
-                  className="card-img-top p-3"
-                  style={{ height: "180px", objectFit: "contain" }}
+                  className="card-img-top p-4"
+                  style={{ height: "200px", objectFit: "contain" }}
                 />
-                <div className="card-body d-flex flex-column text-center">
-                  <h6 className="card-title">{p.title}</h6>
-                  <p className="fw-bold mt-auto">{p.price} €</p>
+
+                <div className="card-body d-flex flex-column">
+                  <h6 className="card-title text-truncate">{p.title}</h6>
+
+                  <div className="mt-auto d-flex justify-content-between align-items-center">
+                    <span className="fw-bold text-primary fs-5">
+                      {p.price} €
+                    </span>
+                    <span className="badge text-bg-dark">{p.category}</span>
+                  </div>
                 </div>
               </div>
             </Link>
           </div>
         ))}
       </div>
+
+      {filteredProducts.length === 0 && (
+        <p className="text-center text-muted mt-5">
+          Nessun prodotto disponibile con questo filtro.
+        </p>
+      )}
     </div>
   );
 }

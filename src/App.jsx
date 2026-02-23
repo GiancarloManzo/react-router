@@ -1,26 +1,22 @@
-import Navbar from "./components/Navbar";
-import ProductDetailPage from "./pages/ProductDetailPage";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./index.css";
-
 import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+
 import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
 import ProductsPage from "./pages/ProductsPage";
-function App() {
+import ProductDetailPage from "./pages/ProductDetailPage";
+import AboutPage from "./pages/AboutPage";
+
+export default function App() {
   return (
     <>
       <Navbar />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/AboutPage" element={<AboutPage />} />
-        <Route path="/prodotti" element={<ProductsPage />} />
+        <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </>
   );
 }
-
-export default App;

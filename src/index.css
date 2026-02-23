@@ -10,3 +10,24 @@ body {
 #root {
   min-height: 100vh;
 }
+
+.hero {
+  background: linear-gradient(180deg, rgba(13, 110, 253, 0.12), transparent);
+  min-height: calc(100vh - 56px);
+}
+
+.home-card {
+  border-radius: 16px;
+}
+
+.product-card {
+  border-radius: 14px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+}

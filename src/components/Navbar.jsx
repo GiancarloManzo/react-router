@@ -1,32 +1,35 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { BudgetContext } from "../contexts/BudgetContext";
 
 export default function Navbar() {
-  const { budgetMode, setBudgetMode } = useContext(BudgetContext);
+  const { budgetMode, toggleBudgetMode } = useContext(BudgetContext);
 
   return (
-    <nav className="navbar navbar-light bg-light border-bottom">
-      <div className="container d-flex justify-content-between">
-        <Link className="navbar-brand" to="/">
-          React Store
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+      <div className="container">
+        <Link className="navbar-brand fw-bold" to="/">
+          🛒 React Store
         </Link>
 
-        <div className="d-flex gap-2">
-          <Link className="btn btn-outline-primary" to="/prodotti">
+        <div className="d-flex gap-2 align-items-center">
+          <NavLink to="/" className="btn btn-outline-light">
+            Home
+          </NavLink>
+
+          <NavLink to="/products" className="btn btn-outline-light">
             Prodotti
-          </Link>
+          </NavLink>
 
           <button
-            className="btn btn-primary"
-            onClick={() => setBudgetMode((prev) => !prev)}
+            className={`btn ${budgetMode ? "btn-success" : "btn-warning"}`}
+            onClick={toggleBudgetMode}
           >
-            {budgetMode
-              ? "Disattiva Modalità Budget"
-              : "Attiva Modalità Budget"}
+            {budgetMode ? "Budget ON 💸" : "Budget OFF 💰"}
           </button>
         </div>
       </div>
     </nav>
   );
 }
+s;
