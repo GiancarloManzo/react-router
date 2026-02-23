@@ -1,35 +1,43 @@
-import { BudgetContext } from "../contexts/BudgetContext";
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import BudgetContext from "../contexts/BudgetContext";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const { budgetMode } = useContext(BudgetContext);
+  const ctx = useContext(BudgetContext);
+  const budgetMode = ctx?.budgetMode ?? false;
 
   const filteredProducts = budgetMode
     ? products.filter((p) => p.price <= 30)
     : products;
 
   useEffect(() => {
+    const controller = new AbortController();
+
     setLoading(true);
     setError("");
 
-    fetch("https://fakestoreapi.com/products")
+    fetch("https://fakestoreapi.com/products", { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error("Errore nel recupero prodotti");
         return res.json();
       })
       .then((data) => {
+        if (!Array.isArray(data)) throw new Error("Risposta API non valida");
         setProducts(data);
-        setLoading(false);
       })
       .catch((err) => {
+        if (err.name === "AbortError") return;
         setError(err.message);
+      })
+      .finally(() => {
         setLoading(false);
       });
+
+    return () => controller.abort();
   }, []);
 
   if (loading) {
@@ -65,7 +73,7 @@ export default function ProductsPage() {
         {filteredProducts.map((p) => (
           <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={p.id}>
             <Link
-              to={`/products/${p.id}`}
+              to={`/prodotti/${p.id}`}
               className="text-decoration-none text-dark"
             >
               <div className="card h-100 shadow-sm border-0 product-card">

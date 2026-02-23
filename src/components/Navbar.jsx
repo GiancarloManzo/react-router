@@ -1,9 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
-import { BudgetContext } from "../contexts/BudgetContext";
+import BudgetContext from "../contexts/BudgetContext";
 
 export default function Navbar() {
-  const { budgetMode, toggleBudgetMode } = useContext(BudgetContext);
+  const ctx = useContext(BudgetContext);
+
+  if (!ctx) return null;
+
+  const { budgetMode, toggleBudgetMode } = ctx;
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
@@ -17,13 +21,14 @@ export default function Navbar() {
             Home
           </NavLink>
 
-          <NavLink to="/products" className="btn btn-outline-light">
+          <NavLink to="/prodotti" className="btn btn-outline-light">
             Prodotti
           </NavLink>
 
           <button
             className={`btn ${budgetMode ? "btn-success" : "btn-warning"}`}
             onClick={toggleBudgetMode}
+            type="button"
           >
             {budgetMode ? "Budget ON 💸" : "Budget OFF 💰"}
           </button>
@@ -32,4 +37,3 @@ export default function Navbar() {
     </nav>
   );
 }
-s;

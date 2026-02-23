@@ -10,13 +10,8 @@ export default function HomePage() {
               Benvenuto in <span className="text-primary">React Store</span> 🛒
             </h1>
 
-            <p className="lead text-muted mb-4">
-              Prodotti reali da FakeStore API, UI pulita con Bootstrap e
-              modalità Budget per filtrare i prezzi.
-            </p>
-
             <div className="d-flex gap-2 justify-content-center justify-content-lg-start">
-              <Link to="/products" className="btn btn-primary btn-lg">
+              <Link to="/prodotti" className="btn btn-primary btn-lg">
                 Vai ai prodotti 🚀
               </Link>
 
@@ -57,7 +52,7 @@ export default function HomePage() {
               </div>
 
               <div className="mt-4">
-                <Link to="/products" className="btn btn-dark w-100">
+                <Link to="/prodotti" className="btn btn-dark w-100">
                   Sfoglia catalogo
                 </Link>
               </div>
